@@ -10,8 +10,7 @@ This library provides tracking primitives for your React Applcation. It is agnos
 
 1. Wrap you application with a provider:
 
-```
-
+```jsx
 import { TrackingProvider } from '@dvnch/react-tracking';
 
 const App = () => {
@@ -25,13 +24,11 @@ const App = () => {
     </TrackingProvider>
   );
 };
-
 ```
 
 2. In a component you want to trigger an event, use the provded hook:
 
-```
-
+```jsx
 import { useTracking } from '@dvnch/react-tracking';
 
 const Button = () => {
@@ -51,6 +48,4 @@ const Button = () => {
     </div>
   );
 };
-
-
 ```
