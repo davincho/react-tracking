@@ -1,0 +1,12 @@
+{
+  "name": "@dvnch/react-tracking",
+  "repository": "https://github.com/davincho/react-tracking.git",
+  "author": "David Madner <david.madner@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@dvnch/eslint-config": "^1.0.0",
+    "eslint": "^7.0.0",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.2"
+  }
+}
