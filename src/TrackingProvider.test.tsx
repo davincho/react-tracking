@@ -27,12 +27,12 @@ test('TrackingProvider - default generic', () => {
 });
 
 test('TrackingProvider with explicit type for logged events', () => {
-  interface TestEvent {
+  interface TestEventPayload {
     custom: string;
   }
 
   const { useTracking: customUseTracking } = createTrackingProvider<
-    TestEvent
+    TestEventPayload
   >();
 
   type TrackEventCallbackType = ReturnType<
@@ -49,5 +49,8 @@ test('TrackingProvider with explicit type for logged events', () => {
 
   // We assert that the expected params for the trackEvent matches TestEvent
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const cond1: AssertEqualTypes<ParamsForTrackEventCallback, TestEvent> = true;
+  const cond1: AssertEqualTypes<
+    ParamsForTrackEventCallback,
+    TestEventPayload
+  > = true;
 });
