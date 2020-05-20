@@ -1,21 +1,29 @@
-import React, { useContext, FC } from 'react';
+import React, { useContext, useRef, FC } from 'react';
 
-interface Provider<T> {
+interface ContextProps<T> {
   trackEvent: (data: T) => void;
 }
 
 interface Props<T> {
-  onEvent: (data: T) => void;
+  onEventTracked: (data: Partial<T>) => void;
+}
+
+interface Default {
+  [key: string]: any;
+}
+
+interface InternalContextProps<T> {
+  onEventTracked?: (data: Partial<T>) => void;
 }
 
 export const createTrackingProvider = <T,>() => {
-  const Context = React.createContext<Provider<T>>(null);
+  const Context = React.createContext<ContextProps<Partial<T>>>(null);
 
-  const TrackingProvider: FC<Props<T>> = ({ onEvent, children }) => {
+  const TrackingProvider: FC<Props<T>> = ({ onEventTracked, children }) => {
     return (
       <Context.Provider
         value={{
-          trackEvent: onEvent
+          trackEvent: onEventTracked
         }}
       >
         {children}
@@ -31,14 +39,41 @@ export const createTrackingProvider = <T,>() => {
     };
   };
 
+  const TrackingSection: FC<Partial<T>> = ({
+    children,
+
+    ...data
+  }) => {
+    const { trackEvent } = useContext(Context);
+
+    const currentData = useRef(data);
+
+    return (
+      <Context.Provider
+        value={{
+          trackEvent: (eventData) => {
+            trackEvent({
+              ...currentData.current,
+              ...eventData
+            });
+          }
+        }}
+      >
+        {children}
+      </Context.Provider>
+    );
+  };
+
   return {
     TrackingProvider,
+    TrackingSection,
     useTracking
   };
 };
 
 // Create context with no generic
-const result = createTrackingProvider();
+const result = createTrackingProvider<Default>();
 
 export const useTracking = result.useTracking;
 export const TrackingProvider = result.TrackingProvider;
+export const TrackingSection = result.TrackingSection;

@@ -18,8 +18,8 @@ import { TrackingProvider } from '@dvnch/react-tracking';
 const App = () => {
   return (
     <TrackingProvider
-      onEvent={(eventData) => {
-        // Consume even data
+      onEventTracked={(eventData) => {
+        // Consume event data
       }}
     >
       <App />
@@ -37,20 +37,66 @@ const Button = () => {
   const { trackEvent } = useTracking();
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          trackEvent({
-            label: 'TrackMe!'
-          });
-        }}
-      >
-        TrackMe!
-      </button>
-    </div>
+    <button
+      onClick={() => {
+        trackEvent({
+          label: 'button'
+        });
+      }}
+    >
+      CLickMe
+    </button>
   );
 };
 ```
+
+3. If you want to add a specific value to all tracked events happening within the child tree, you can leverage the `TrackingSection` component:
+
+```jsx
+
+import {
+  TrackingSection,
+  TrackingProvider,
+  useTracking
+} from '@dvnch/react-tracking';
+
+const App = () => {
+  return (
+    <TrackingProvider
+      onEventTracked={(eventData) => {
+        // Prints { category: 'foo', label: 'button' }
+        console.log(eventData);
+      }}
+    >
+      <TrackingSection category="foo">
+        <Button />
+      </TrackingSection>
+    </TrackingProvider>
+  );
+};
+
+const Button = () => {
+  const { trackEvent } = useTracking();
+
+  return (
+    <button
+      onClick={() => {
+        trackEvent({
+          label: 'button'
+        });
+      }}
+    >
+      ClickMe
+    </button>
+  );
+};
+
+
+
+
+
+```
+
 
 # TypeScript
 
@@ -62,21 +108,37 @@ Create a new file (for instance `Tracking.tsx`) and paste the following:
 // Tracking.tsx
 
 interface YourCustomEventyPayload {
-  label?: string;
-  category?: string;
+  label: string;
+  category: string;
 }
 
 const result = createTrackingProvider<YourCustomEventyPayload>();
 
 export const useTracking = result.useTracking;
 export const TrackingProvider = result.TrackingProvider;
+export const TrackingSection = resutl.TrackingSection;
 
 ```
 
 In your consuming components, instead of referencing the libraries you consume the primitives provided by `Tracking.tsx`:
 
 ```jsx
-import { useTracking } from './Tracking';
+import { useTracking, TrackingSection, TrackingProvider } from './Tracking';
+
+const App = () => {
+
+  return (
+    <TrackingProvider onEventTracked={() => {
+      // Consume event
+    }}>
+      {/* Will throw a Typescript error  */}
+      <TrackingSection foor="bar">
+        <Button />
+      </TrackingSection>
+    </TrackingProvider>
+  )
+
+}
 
 const Button = () => {
   const { trackEvent } = useTracking();
@@ -89,7 +151,7 @@ const Button = () => {
             label: 'TrackMe!'
           });
 
-          // Would throw a typescript error!
+          // Will throw a typescript error!
           trackEvent({
             someting: 'foo'
           });

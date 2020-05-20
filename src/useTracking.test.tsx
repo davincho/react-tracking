@@ -8,11 +8,13 @@ import {
   createTrackingProvider
 } from './TrackingProvider';
 
-test('TrackingProvider - default generic', () => {
+test('useTracking - default generic', () => {
   const trackCallback = jest.fn();
 
   const wrapper = ({ children }) => (
-    <TrackingProvider onEvent={trackCallback}>{children}</TrackingProvider>
+    <TrackingProvider onEventTracked={trackCallback}>
+      {children}
+    </TrackingProvider>
   );
 
   const { result } = renderHook(() => useTracking(), {
@@ -26,7 +28,7 @@ test('TrackingProvider - default generic', () => {
   expect(trackCallback).toHaveBeenCalledWith({ custom: 'data' });
 });
 
-test('TrackingProvider with explicit type for logged events', () => {
+test('useTracking with explicit type for logged events', () => {
   interface TestEventPayload {
     custom: string;
   }
@@ -51,6 +53,6 @@ test('TrackingProvider with explicit type for logged events', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cond1: AssertEqualTypes<
     ParamsForTrackEventCallback,
-    TestEventPayload
+    Partial<TestEventPayload>
   > = true;
 });
