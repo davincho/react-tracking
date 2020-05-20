@@ -44,7 +44,7 @@ const Button = () => {
         });
       }}
     >
-      CLickMe
+      ClickMe
     </button>
   );
 };
@@ -91,10 +91,6 @@ const Button = () => {
   );
 };
 
-
-
-
-
 ```
 
 
@@ -106,39 +102,38 @@ Create a new file (for instance `Tracking.tsx`) and paste the following:
 
 ```jsx
 // Tracking.tsx
-
 interface YourCustomEventyPayload {
   label: string;
   category: string;
 }
 
-const result = createTrackingProvider<YourCustomEventyPayload>();
-
-export const useTracking = result.useTracking;
-export const TrackingProvider = result.TrackingProvider;
-export const TrackingSection = resutl.TrackingSection;
+export const {
+  useTracking,
+  TrackingProvider,
+  TrackingSection
+} = createTrackingProvider<YourCustomEventyPayload>();
 
 ```
 
-In your consuming components, instead of referencing the libraries you consume the primitives provided by `Tracking.tsx`:
+In your consuming components, instead of referencing the library directly you consume the primitives provided by `Tracking.tsx`:
 
 ```jsx
 import { useTracking, TrackingSection, TrackingProvider } from './Tracking';
 
 const App = () => {
-
   return (
-    <TrackingProvider onEventTracked={() => {
-      // Consume event
-    }}>
+    <TrackingProvider
+      onEventTracked={() => {
+        // Consume event
+      }}
+    >
       {/* Will throw a Typescript error  */}
       <TrackingSection foor="bar">
         <Button />
       </TrackingSection>
     </TrackingProvider>
-  )
-
-}
+  );
+};
 
 const Button = () => {
   const { trackEvent } = useTracking();

@@ -71,9 +71,9 @@ export const createTrackingProvider = <T,>() => {
   };
 };
 
-// Create context with no generic
-const result = createTrackingProvider<Default>();
-
-export const useTracking = result.useTracking;
-export const TrackingProvider = result.TrackingProvider;
-export const TrackingSection = result.TrackingSection;
+// Create context with default generic
+export const {
+  useTracking,
+  TrackingProvider,
+  TrackingSection
+} = createTrackingProvider<Default>();
