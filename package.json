@@ -46,7 +46,7 @@
     "test:ci": "jest --ci",
     "build:dev": "rollup -w -c",
     "build": "rollup -c",
-    "release": "semantic-release --dry-run"
+    "release": "semantic-release"
   },
   "husky": {
     "hooks": {
