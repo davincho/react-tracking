@@ -60,5 +60,5 @@
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix && prettier --write"
   },
-  "version": "1.0.0"
+  "version": "1.0.2"
 }
