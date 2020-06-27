@@ -18,6 +18,11 @@ module.exports = {
         prepareCmd: 'node ./copy-version.js'
       }
     ],
-    '@semantic-release/git'
+    [
+      '@semantic-release/github',
+      {
+        assets: [{ path: 'dist/**', label: 'Release' }]
+      }
+    ]
   ]
 };

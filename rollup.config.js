@@ -16,7 +16,7 @@ const OUTPUT_FOLDER_NAME = 'dist';
 
 export default {
   input: path.join(INPUT_FOLDER_NAME, INPUT_FILE_NAME),
-  external: Object.keys(external.dependencies),
+  external: Object.keys(external.dependencies || {}),
   output: {
     file: path.join(OUTPUT_FOLDER_NAME, OUTPUT_FILE_NAME),
     format: 'cjs'
