@@ -1,6 +1,10 @@
 {
   "name": "@dvnch/react-tracking",
   "repository": "https://github.com/davincho/react-tracking.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
   "author": "David Madner <david.madner@gmail.com>",
   "license": "MIT",
   "sideEffects": false,
