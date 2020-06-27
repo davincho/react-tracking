@@ -4,6 +4,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "tracking",
+    "reactjs",
+    "google-analytics",
+    "reactnative"
+  ],
   "private": false,
   "author": "David Madner <david.madner@gmail.com>",
   "license": "MIT",
