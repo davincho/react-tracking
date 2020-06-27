@@ -17,8 +17,10 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@types/react": "^16.9.35",
     "eslint": "^7.0.0",
+    "husky": ">=4",
     "jest": "^26.0.1",
     "jest-in-case": "^1.0.2",
+    "lint-staged": ">=10",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
     "rollup": "^2.18.0",
@@ -42,5 +44,13 @@
     "build:dev": "rollup -w -c",
     "build": "rollup -c",
     "release": "semantic-release"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix && prettier --write"
   }
 }
