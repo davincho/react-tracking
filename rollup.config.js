@@ -2,6 +2,7 @@ import path from 'path';
 
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
 import generatePackageJson from 'rollup-plugin-generate-package-json';
 import typescript from 'rollup-plugin-typescript2';
@@ -25,6 +26,12 @@ export default {
     del({ targets: OUTPUT_FOLDER_NAME }),
     // Needs to go as the very first plugin (expect for cleaning)
     commonjs(),
+    copy({
+      targets: [
+        { src: 'README.md', dest: 'dist/' },
+        { src: 'LICENSE', dest: 'dist/' }
+      ]
+    }),
     // See https://rollupjs.org/guide/en/#rollupplugin-node-resolve
     resolve(),
     typescript(),
