@@ -23,6 +23,7 @@ module.exports = {
       {
         assets: [{ path: 'dist/**' }]
       }
-    ]
+    ],
+    '@semantic-release/git'
   ]
 };
